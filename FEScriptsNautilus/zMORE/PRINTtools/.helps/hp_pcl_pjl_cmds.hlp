@@ -1,0 +1,970 @@
+*****************************************************************************
+ Hewlett-Packard  PCL (and PJL)  Printer Commands
+
+ - PCL for HP LaserJet 4 Printers (and other models, later and earlier)
+ - PCL for HP DesignJet roll plotters
+ - PJL for Xerox 8830 roll plotters
+
+                                                       Assembled: ~1996
+                                         Format changed slightly: 2010 aug 26
+
+                                        in FILE       hp_pcl_pjl_cmds.hlp
+
+                   in DIRECTORY  .../nautilus-scripts/PRGRMNGtools/.helps
+*****************************************************************************
+
+CONTENTS:
+
+- TABLE OF COMMON HP-PCL CODES
+
+- EXAMPLES OF USE OF THE HP PCL CONTROL CODES (Flowmaster 1996)
+
+- EXAMPLES OF USE OF THE HP PCL CONTROL CODES (in shell scripts) for
+
+   - HP LaserJet, DeskJet, InkJet printers
+
+   - HP DesignJet roll plotters
+
+   - Xerox 8830 roll plotters
+
+
+
+							Page PCL_table.1				
+****************************
+TABLE OF COMMON HP-PCL CODES
+****************************
+
+   Following is an abbreviated list of PCL codes.  The 'HP PCL Printer
+   Language Technical Reference Manual' (circa 1995) provides a more
+   complete list of PCL commands.
+
+   That manual, or a later equivalent, may be available from HP to
+   development programmers --- if the programmers are willing to do
+   a lot of begging and wheedling --- or part with some big bucks
+   (on the order of $100).
+
+   A short list of PCL commands was in Appendix A of the 
+   'HP LaserJet 4V and 4MV Printer User's Manual'.
+
+
+NOTE:
+         Where we have actually put the ONE-BYTE ESCAPE-CODE in this file,
+         rather than a 'synonym' like <Esc>, the code will show differently in
+         different text editor/browser utilities.
+
+gedit:
+
+         In the 'gedit' Gnome text editor, each occurence of the one-byte 
+         ESCAPE-CODE in this text file will show as a LITTLE SQUARE ---
+         with '0 0' in the tiny little first row in the square ---
+         and '1 B' in the tiny second row.
+
+kwrite:
+
+         In the 'kwrite' KDE text editor, the one-byte escape-code in this
+         text file shows as a little symbol that looks like a circle with
+         four 'hairs' growing out of it --- pointing to the north-east,
+         the south-east, the south-west, and the north-west.
+         
+Tcl-Tk text widget:
+
+         The ONE-byte escape-code shows as the FOUR characters '\x1b'
+         in the text widget of a Tcl-Tk file GUI --- like in the 'xpg'
+         text browser utility of the FE (Freedom Environment) system.
+
+nedit:
+
+         The occurrences of the ONE-byte escape-code in this file show
+         as the FIVE characters '<esc>' in the 'nedit' text editor.
+
+         In this file, we will often represent the ONE-byte escape code
+         in the same way --- as '<Esc>'.
+
+  ---------------------------------------------------------------------------
+  Printer
+  Command        Function              Notes (esp. what # refers to)
+  ------------  --------------------  ---------------------------------------
+   <Esc>         Escape character      Decimal 27, Hex 1B, Octal 033
+   <LF>          Line feed character   Decimal 10, Hex 0A, Octal 012
+   <FF>          Form feed character   Decimal 12, Hex 0C, Octal 014
+   <CR>          Carriage Return char  Decimal 13, Hex 0D, Octal 015
+   <Esc>E        Resets the printer   
+
+   <Esc>&l0H     Eject page             Here and in the following, 'l' is
+                                        the letter 'el'.
+
+   <Esc>&l#X     Indicates # of copies  # = 1 to 32,767 
+   
+   <Esc>&l#H     Selects paper source   0 = prints or ejects current page 
+                                        1 = paper cassette
+                                        2 = manual feed - paper
+                                        3 = manual feed - envelope
+                                        4 = MP (Multi-Purpose) tray
+                                        5 = optional 500-sheet cassette
+                                        6 = optional envelope feeder
+
+   <Esc>&l#A     Selects paper size or  1 = Executive 
+                 envelope size          2 = letter
+                                        3 = legal
+                                        6 = 11x17
+                                       11 = 11x17
+                                       26 = A4
+                                       27 = A3
+                                       45 = JIS B5
+                                       46 = JIS B4
+                                       71 = JPOST 
+                                       72 = JPOSTD
+                                       80 = Monarch
+                                       81 = Commercial 10
+                                       90 = DL
+                                       91 = International C5
+                                      100 = Commercial B5
+                                      101 = Custom
+
+   <Esc>&l#O     Selects orientation    0 = portrait 
+                                        1 = landscape
+                                        2 = reverse portrait
+                                        3 = reverse landscape
+
+   <Esc>&a#L     Sets left  margin         column number 
+   <Esc>&a#M     Sets right margin         column number 
+
+   <Esc>&l#U     Sets long-edge (left)     in # of decipoints (1/720 inch) 
+                 offset registration
+   <Esc>&l#Z     Sets short-edge (top)     in # of decipoints (1/720 inch) 
+                 offset registration
+
+   <Esc>&l#E     Sets top  margin          Number of lines 
+   <Esc>&l#F     Sets text length (i.e.    Number of lines from top margin
+                    bottom  margin)
+
+   <Esc>&l#D     Sets line spacing      Lines per inch: 1,2,3,4,6,8,12,16,24,48 
+ 
+   <Esc>&k#H     Sets horizontal        1/120th inch increments (compresses
+                 motion index                   print horizontally)
+   <Esc>&k#C     Sets vertical          1/48th inch increments (compresses
+                 motion index                   print vertically)
+
+
+
+							Page PCL_table.2				
+
+   <Esc>&a#R     Sets vertical          # = row number
+                 position, # of rows
+   <Esc>*p#Y     Sets vertical          # = dot number
+                 position, # of dots
+   <Esc>&a#V     Sets vertical          # = decipoint number
+                 position, # of decipoints
+
+   <Esc>&a#C     Sets horizontal        # = row number  (column?)
+                 position, # of rows
+				(columns?)
+   <Esc>*p#X     Sets horizontal        # = dot number
+                 position, # of dots
+   <Esc>&a#H     Sets horizontal        # = decipoint number
+                 position, # of decipoints
+
+   <Esc>&d#D     Begins underline       0 = fixed  ;  3 = floating
+   <Esc>&d@      Ends   underline
+
+  On HP LaserJet III printers or HP LaserJet 4/4M printers (with optional
+  duplexing unit):
+
+   <Esc>&l#S     Sets simplex/duplex    Simplex = 0 ,
+                                        Duplex long-edge binding = 1 , 
+                                        Duplex short-edge binding = 2 
+
+   <Esc>&l#U     Sets long-edge (left)  in # of decipoints (1/720 inch) 
+                 offset registration
+
+   <Esc>&l#Z     Sets short-edge (top)  in # of decipoints (1/720 inch) 
+                 offset registration
+
+  ------------
+  END OF TABLE of PCL codes
+  ------------
+
+
+							Page PCL_example.1				
+
+***************************************************************
+* EXAMPLES OF USE OF THE HP PCL CONTROL CODES (Flowmaster 1996):
+***************************************************************
+
+  HPGL Plotting Notes from Flowmaster International Ltd. (circa 1996):
+
+   1. To initialize the printer, first send the sequence: <Esc>E
+
+   2. To move the plot in units of 1/720th inch relative to the left and
+      top edges as viewed in portrait orientation,
+
+                increase the left offset:   e.g.  <Esc>&l360U
+                decrease the top  offset:   e.g.  <Esc>&l-1080Z
+
+   3. To change the plot orientation to landscape:  <Esc>&l1O
+
+   4. To modify the size (in inches) or aspect ratio of the plot.
+  
+                 set the horizontal* size:   e.g. <Esc>*c7.5L
+                 set the vertical*   size:   e.g. <Esc>*cx.xK
+                     where x.x is chosen to give an acceptable aspect ratio
+
+      * with reference to the 'rotated' orientation of the HP-GL plot.
+
+   5. To select HP-GL mode, send as the last sequence: <Esc>%0B
+
+   6. If the resulting output shows only the left part of the plot, turn
+      'Page Protection' mode ON from the Job Menu.  If the problem still
+      occurs, then more memory is required.
+
+   NOTE: The character 'l' is a lower case L.  The character 'O' is a
+         capital letter and occurs only in the 'orientation' command.
+         All other characters similar to 'O' are the numeral zero.
+
+   Example:
+       If the printer is connected to LPT1 on a PC, a typical Basic program
+       to send control codes to the printer would be the following:
+
+         10   LPRINT CHR$(27);"E"
+         20   LPRINT CHR$(27);"&l360U"
+         30   LPRINT CHR$(27);"&l-1080Z"
+         40   LPRINT CHR$(27);"&l1O"
+         50   LPRINT CHR$(27);"*c7.5L"
+        100   LPRINT CHR$(27);"%0B"
+
+########################################
+## END of Flowmaster HPGL plotting notes.
+########################################
+
+NOTE:
+       On a UNIX/Linux system, these escape codes and quoted strings could be
+       put in a file, along with some HPGL plot commands.
+
+       If the codes and data are in a file, a command like
+
+                  lp -dlp1 <filename>
+       or
+                  lpr -Plp1 <filename>
+
+       would send the datastream to a printer,
+       where 'lp1' represents a print queue name.
+
+       In a script, the escape codes and the quoted string(s) above could be
+       'echo'-ed (with |) into an 'lp' or 'lpr' print command.
+
+#####################################
+On putting control codes, like escape,
+in a text file using a text-editor:
+#####################################
+
+       With the (old) 'nedit' editor (available on SGI-IRIX in the 1990's,
+       for example --- and still available on Linux in 2010), you can enter
+       the <Esc> code by using the 'Edit, Insert Ctrl Code' menu pull-down
+       to enter decimal 27, after positioning the editor cursor where you want
+       the code inserted.
+
+       With the (old) SGI 'jot' editor, you could enter the <Esc> code by
+       holding the Alt key while you enter decimal 27, and then press the
+       <Esc> key after releasing the Alt key.
+
+             (On Linux, if you press the Alt key and a number while you are
+              in 'gedit', you are tabbed through your 'gedit' panels.)
+
+       I have not found a way to enter control codes (hex 00 to hex 1F,
+       octal 000 to 037) in the 'gedit' text editor. One way is to paste
+       the code from another text file --- like this one --- into a 'gedit'
+       window --- or ANY OTHER text editor window.
+       
+
+
+
+								Page HPLJ.1				
+
+*********************************************
+* EXAMPLES OF USE OF THE HP PCL CONTROL CODES 
+*********************************************
+* HP LaserJet, DeskJet, InkJet printers
+*********************************************
+
+Here are strings of PCL control codes that were actually used as 'headers'
+to plot to HP LaserJet, DeskJet, InkJet printers.
+
+The lines starting with '#' were comment lines in a script.
+
+#############################################################################
+############# FOR A-Horizontal, PREP PCL CODE FOR FRONT OF PLOT FILE. #######
+#############################################################################
+##
+##         reset-printer;CASSETTE;LETTER;LANDSCAPE;top-marg;anchor-point;cursor;PIC-FRAME;BOTTOM-OFFSET;SIDE-OFFSET;HPGL-mode
+##                         feed    size                       (300ths)           (720ths)    (720ths)     (720ths)
+##                          1H     2A       1O     0E         p 0"x0"      c0T   c 11"x8.5"     U            Z
+##                                                                
+##                                                           					        (0.25" too much;
+##                                                           					         0.10" too little)
+##                                                           					 -0.00"     0.15"
+##  PCLSTART="%-12345XE&l1H&l2A&l1O&l00E*p000x000Y*c000T*c7920x6120Y&l-000U&l108Z%1B"
+##                                                           					 -0.00"     0.00"
+    PCLSTART="%-12345XE&l1H&l2A&l1O&l00E*p000x000Y*c000T*c7920x6120Y&l-000U&l000Z%1B"
+
+-------------------------------------------------------------------------
+The A-size HORIZONTAL ('landscape') plot codes (above) were used in conjuction with an
+application options file, of an application generating the HPGL codes
+making up the plot data. That opions file specified a NEGATIVE 'TRANSLATION'
+and some MARGIN values:
+
+                echo "STANDARD SIZE    = A" >> $USR_OPT 
+                echo "ORIENTATION      = HORIZONTAL" >> $USR_OPT 
+                echo "TRANSLATION      = -0.20, 0.0" >> $USR_OPT
+#               echo "MARGIN SIZE      = 0.0,  0.0,  0.0,  0.0" >> $USR_OPT
+                echo "MARGIN SIZE      = 0.190,  0.190,  0.0,  0.0" >> $USR_OPT
+
+You might have to change some of the HP-PCL code values (for OFFSETs) to get
+the same result for your plotter.
+
+-------------------------------------------------------------------------
+
+
+
+#############################################################################
+############# FOR A-Vertical, PREP PCL CODE FOR FRONT OF PLOT FILE. #########
+#############################################################################
+##  Map an A-size picture into an A-size, PORTRAIT area on the paper and assure printer is in HPGL2-mode:
+##
+##         reset-printer;CASSETTE;LETTER;PORTRAIT;top-marg;anchor-point;cursor;PIC-FRAME;BOTTOM-OFFSET;SIDE-OFFSET;HPGL-mode
+##                         feed    size  /LANDSCAPE          (300ths)           (720ths)  (720ths)  (720ths)
+##                          1H     2A       0O     0E      p 0"x0"      c0T    c 11"x8.5"     U         Z
+##                                       or 1O             frm-UprLft-papr-corner            
+##                                                                                                 -0.00"    0.00"
+   PCLSTART="%-12345XE&l1H&l2A&l1O&l00E*p000x000Y*c000T*c7920x6120Y&l-000U&l000Z%1B"
+
+-------------------------------------------------------------------------
+The A-size VERTICAL ('portrait') plot codes (above) were used in conjuction with an
+application options file that used a NEGATIVE 'TRANSLATION' and some
+MARGIN values:
+
+#               echo "NONSTANDARD SIZE =  8.5, 11.0" >> $USR_OPT 
+                echo "STANDARD SIZE    = -A" >> $USR_OPT 
+                echo "ORIENTATION      = VERTICAL" >> $USR_OPT 
+                echo "TRANSLATION      = -0.20, 0.0" >> $USR_OPT
+                echo "MARGIN SIZE      = 0.0,  0.0,  0.0,  0.0" >> $USR_OPT
+
+You might have to change some of the HP-PCL code values (for OFFSETs) to get
+the same result for your plotter.
+
+-------------------------------------------------------------------------
+
+
+#############################################################################
+############# FOR B-size (no particular tray; for printers  #################
+############# that auto-detect tray with B-size paper),     #################
+############# PREP PCL CODE FOR FRONT OF PLOT FILE.         #################
+#############################################################################
+##  Map a B-size picture into a B-size, landscape area on the paper and assure printer is in HPGL2-mode:
+##
+##           reset-printer;11x17=B-size;auto-select;LANDSCAPE;top-marg;anchor-point;cursor;PIC-FRAME;BOTTOM-OFFSET;SIDE-OFFSET;HPGL-mode
+##                          Paper-size     Tray                         (300ths)            (720ths)    (720ths)  (720ths)
+##                             6A           7H          1O     0E      p 0"x0"      c0T     c 17"x11"     U         Z
+##                         (or 11A                                     frm-UprLft-papr-corner            
+##                        for some printers)                                                       -0.00"     0.00"
+
+  PCLSTART="%-12345XE&l6A&l7H&l1O&l00E*p000x000Y*c000T*c12240x7920Y&l-000U&l000Z%1B"
+
+
+-------------------------------------------------------------------------
+The B-size LANDSCAPE plots (above, below) were used in conjuction with an
+an application options file that used a NEGATIVE 'TRANSLATION'  some 
+MARGIN values:
+
+               echo "STANDARD SIZE    = B" >> $USR_OPT 
+                echo "ORIENTATION      = HORIZONTAL" >> $USR_OPT 
+                echo "TRANSLATION      = -0.20, 0.0" >> $USR_OPT
+#                echo "MARGIN SIZE      = 0.0,  0.0,  0.0,  0.0" >> $USR_OPT
+                echo "MARGIN SIZE      = 0.0,  0.0,  0.19,  0.19" >> $USR_OPT
+
+You might have to change some of the HP-PCL code values (for OFFSETs) to get
+the same result for your plotter.
+
+-------------------------------------------------------------------------
+
+
+#############################################################################
+############# FOR B3 (B in BUILT-IN 250-sheet tray),  #####################
+############# PREP PCL CODE FOR FRONT OF PLOT FILE.   #####################
+#############################################################################
+##
+##           reset-printer;250-FEED;11x17;LANDSCAPE;top-marg;anchor-point;cursor;PIC-FRAME;BOTTOM-OFFSET;SIDE-OFFSET;HPGL-mode
+##                         STDtray   size                      (300ths)           (720ths)    (720ths)  (720ths)
+##                           1H    11A       1O     0E      p 0"x0"      c0T       c 17"x11"     U         Z
+##                               or 6A                      frm-UprLft-papr-corner            
+##                                               				        	 -0.00"     0.00"
+  PCLSTART="%-12345XE&l1H&l6A&l1O&l00E*p000x000Y*c000T*c12240x7920Y&l-000U&l000Z%1B"
+
+
+#############################################################################
+############# PREP PCL CODE FOR END OF PLOT FILE ##########################
+#############################################################################
+##
+## !NO BLANK PAGE EJECT! Good after A, B, legal size plots!? Note the line feed.
+## NOTE: Page 4-4 of the 'HP PCL5 Printer Language Technical Reference Manual'
+##       recommends the use of '[esc]%-12345X[esc]E' at the beginning of each
+##       print job and '[esc]E[esc]%-12345X' at the end of each print job.
+##       The older '[esc]E' command is for backward compatibility.
+##
+## BUT the extra '[esc]E' command results in an extra sheet of blank paper --
+## on Laserjet 4's.  Not Laserjet 3's?
+##
+# PCLEND="%0AE%-12345X
+# "
+
+PCLEND="%0A%-12345X
+"
+
+This 'ending code' should work for most HP-compatible plotters --- to finish
+'wrapping up' the HPGL plot-commands data coming from an application program.
+
+
+
+								Page HPDJroll.1				
+
+
+*********************************************
+* EXAMPLES OF USE OF THE HP PCL CONTROL CODES 
+*********************************************
+* for **** HP DesignJet roll plotters **** .
+*********************************************
+
+Here are strings of PCL control codes used to use as a 'header' to most
+HP DesignJet roll plotters.
+
+#############################################################################
+## DESIGN-JET PCL code:
+##  
+##  NOTE: 
+##  In some cases (applications), you may need to use 'sed' to strip off
+##  the 1st and last lines of the a plot file coming from an application
+##  and use your own PCL codes -- for HP DesignJet roll plotting or for
+##  Xerox 8830 plotting.
+##  
+##  Simple sample reset codes follow -- commented out.
+#############################################################################
+   PCLSTART="%-12345XE"
+
+#   PCLEND="%1A%-12345X"
+    PCLEND="E%-12345X"
+
+
+************************
+* EXAMPLE SCRIPT COMMAND that puts together the 'header', the application's
+*                             plot data, and a 'trailer' --- and pipes the
+*                             three to a print command.
+************************
+
+      (echo "${PCLSTART}" ; cat $PLOT_FILENAME ; echo "${PCLEND}" ) \
+           | $FE_PRT_CMD
+
+
+
+
+								Page X8830.1				
+
+*********************************************
+* EXAMPLES OF USE OF THE HP PJL CONTROL CODES 
+*********************************************
+* for  ***** Xerox 8830 roll plotters *****.
+*********************************************
+
+Here are strings of HP *PJL* control codes used to make a 'header' for most
+Xerox 8830 roll plotters.
+
+Following is a pertinent extract of comments and code from a script.
+
+#############################################################################
+## Set Xerox 8830 PCL-PJL prefix code:
+##  
+##  A sample Xerox 8830 plot file ('Gold_J.plt') from Xerox web page
+##           http://www.xerox.com/drivers/Xerox_8830/faq8830_05.htm#demodisk
+##  indicates that it may not be necessary to remove the
+##  " <ESC>%-1B" PCL code prepended, on a (first) line by itself, before
+##  the HPGL2 cmds, by some applications that generate HPGL plot commands.
+## 
+##  We could use 'tail +2', rather than 'sed', to strip off
+##  the 1st line of the plot file and use our own
+##  PCL-PJL codes -- for  Xerox 8830 plotting.
+##
+##  Or, since we need to use 'sed' anyway to remove blanks from the
+##  application-created HPGL2 file (esp. the leading blanks before the X & Y
+##  coordinates of the PU & PD [pen-up & pen-down] commands of the
+##  HPGL2 file), we can use "sed '1d;2d'" to remove the first 2 lines.
+## 
+##  NOTE: To assure that the initial PJL statement is recognized,
+##        THERE SHOULD BE AT LEAST ONE BLANK AFTER THE FIRST '@PJL'.
+##        Example:  "<UEL>@PJL "
+## 
+#############################################################################
+
+#############################################################################
+##  
+##  The beginning and ending of a typical application HPGL2 output file
+##  looks like:
+##
+##   %-1B
+##  BPINPS  17068NP   1CR0,   1,0,   1,0,   1PC   1,   0,   0,   0
+##  PC   2,   0,   0,   1
+##  PC   3,   0,   0,   0
+##  PC   4,   0,   0,   1
+##  PC   5,   0,   0,   0
+##  PC   6,   0,   0,   1
+##  PC   7,   0,   1,   0
+##  PC   8,   0,   1,   1
+##  PC   9,   1,   0,   0
+##  PC  10,   1,   0,   1
+##  PC  11,   1,   0,   0
+##  PC  12,   1,   0,   1
+##  PC  13,   1,   0,   0
+##  PC  14,   1,   0,   1
+##  PC  15,   1,   1,   0
+##  PC  16,   1,   1,   1
+##  SP   1
+##  PU     95,    193
+##  PD     95,    240
+##  PU     95,    336
+##  PD     95,    383
+##   ....etc.etc......
+##  PD  12514,    851
+##  PD  12509,    847
+##  PD  12491,    837
+##  PD  12491,    824
+##  PUSP0PG;
+##  
+##  NOTE: 'NP   1' indicates that one pen was defined by the application.
+##        Don Airhart sez the Xerox 8830 may require an even number: 'NP2'.
+##  NOTE: There are 16 pen colors defined here in 'PC' statements -- along
+##        with a 'CR' (color range) statement.
+##  These 16 PC statements may result from an application options file
+##  with parms like:
+##    PEN RANGE        = 1, 16
+##    PEN COLOR        = 1, BLACK
+##    PEN COLOR        = 2, ....
+## 
+#############################################################################
+
+#########################################################################
+## NOTE: An application-created HPGL2 file may start & end with 4 lines
+##       like the following.  (This is a C-size, 22"x17",  example.)
+#########################################################################
+##   %-1B
+##  BPINPS  22352NP   2CR0,   2,0,   2,0,   2SP   1
+##  PU      0,   1404  (or some other x,y coord)
+##  PD      0,   1452  (or some other x,y coord)
+##  etc. etc.
+##  PD  16640,   2281
+##  PD  16615,   2268
+##  PD  16615,   2250
+##  PUSP0PG;
+#########################################################################
+##  This plot data might result on using an application options file
+##  with parms like:
+##    PEN RANGE        = 1, 2
+##    PEN COLOR        = 1, BLACK
+##    PEN COLOR        = 2, BLACK
+##    then other option statements.
+##
+##  Note the 'NP   2' in the first line of HP-GL code (plus data).
+#########################################################################
+##  We might be able to use:
+##    PEN RANGE        = 1, 1
+##    PEN COLOR        = 1, BLACK
+##  but according to Don Airhart (a CADAM support expert), some Xerox HPGL*2*
+##  processors require an even-number (or 2**N) pens.
+##      I.e., 'NP   1' in the HPGL2 may cause errors on Xerox 8830's.
+#########################################################################
+##  NOTE: There is a single coordinate, instead of both x & y, on the
+##        'PS' command.  This might result in square paper output on
+##        the Xerox 8830.  See the following 'PS'-8830 note.
+#########################################################################
+
+#############################################################################
+##  FIRST, WE SET PJL (& HPGL2 INIT) STATEMENTS TO TRY TO
+##  CONTROL CUTTING PAPER TO EXACT SIZE.
+##     We try to minimize man-hours of trimming (& paper-waste) 
+##     by using HPGL2 'PS' & 'RO' cmds (and PJL 'SET PAPER').
+#############################################################################
+##  NOTE: The Xerox 8830 will use the HPGL2 'PS' command to determine plot
+##        size, if console parm 'PAPER SIZE DETECT' is set to 'DRAWN AREA'.
+##        The PS (plot size) statement is in HPGL/2 plotter units (plu's).
+##        One 'plu' = 0.025 mm.  There are 1016 plu's to an inch.
+#############################################################################
+##  Std-Size    Inches           plu's
+##  --------  ------------   ----------------
+##    A         11 x 8.5       11176 x   8636    
+##    B         17 x 11        17272 x  11176
+##    C         22 x 17        22352 x  17272
+##    D         34 x 22        34544 x  22352
+##    E         44 x 34        44704 x  34544
+##    H  (*) 150 x 30       152400 x  30480
+##    H2 (*)  75 x 15        76200 x  15240
+##    J        176 x 34       178816 x  34544
+##    K  (*) 180 x 36       182880 x  36576
+#############################################################################
+
+PJLSIZEPARM="@PJL COMMENT ** NON-ANSI-STANDARD PAPER SIZE **
+@PJL SET PAPER = ANY"
+## For now, set default to 180 inches x 36 inches.
+HPGLINIT="IN;PS182880,36576;"
+# MAXLEN="180"
+PENWIDTH="0.25"
+
+case ${FE_PAPERSIZE} in
+
+   A|AH|AV)
+      PJLSIZEPARM="@PJL SET PAPER = ANSI_A"
+      HPGLINIT="IN;PS11176,8636;"
+#      MAXLEN="11"
+#     PENWIDTH="0.20"   Probably too wide/thick; see B size below.
+#     PENWIDTH="0.10"   Probably a little too thin; see B size below.
+#     PENWIDTH="0.12"   Probably a little too thick; see B size below.
+      PENWIDTH="0.11"
+   ;;
+
+   B|BH|BV)
+      PJLSIZEPARM="@PJL SET PAPER = ANSI_B"
+      HPGLINIT="IN;PS17272,11176;"
+#      MAXLEN="17"
+#     PENWIDTH="0.25"   Too wide/thick says Kevin Bond E13, ~24Mar99.
+#     PENWIDTH="0.15"   Too thin says Vince Dobyns E13, ~31Mar99.
+#     PENWIDTH="0.18"   Slightly too thick says K.Bond & V.Dobyns E13, ~13Apr99.
+      PENWIDTH="0.16"
+   ;;
+
+   C|CH|CV)
+      PJLSIZEPARM="@PJL SET PAPER = ANSI_C"
+      HPGLINIT="IN;PS22352,17272;"
+#      MAXLEN="22"
+#     PENWIDTH="0.30"   Probably too wide/thick; see B size above.
+      PENWIDTH="0.25"
+   ;;
+
+   D|DH|DV)
+      PJLSIZEPARM="@PJL SET PAPER = ANSI_D"
+      HPGLINIT="IN;PS34544,22352;"
+#      MAXLEN="34"
+      PENWIDTH="0.35"
+   ;;
+
+   E|EH|EV)
+      PJLSIZEPARM="@PJL SET PAPER = ANSI_E"
+      HPGLINIT="IN;PS44704,34544;"
+#      MAXLEN="44"
+      PENWIDTH="0.35"
+   ;;
+
+   F)
+      PJLSIZEPARM="@PJL SET PAPER = ANY"
+      HPGLINIT="IN;PS51308,30480;"
+#      MAXLEN="50.5"
+      PENWIDTH="0.35"
+   ;;
+
+   F2)
+      PJLSIZEPARM="@PJL SET PAPER = ANY"
+      HPGLINIT="IN;PS25654,15240;"
+#      MAXLEN="25.25"
+      PENWIDTH="0.35"
+   ;;
+
+   H)
+      PJLSIZEPARM="@PJL SET PAPER = ANY"
+      HPGLINIT="IN;PS152400,30480;"
+#      MAXLEN="150"
+      PENWIDTH="0.35"
+   ;;
+
+   H2)
+      PJLSIZEPARM="@PJL SET PAPER = ANY"
+      HPGLINIT="IN;PS76200,15240;"
+#      MAXLEN="75"
+      PENWIDTH="0.35"
+   ;;
+
+   J)
+      PJLSIZEPARM="@PJL SET PAPER = ANY"
+      HPGLINIT="IN;PS178816,34544;"
+#      MAXLEN="176"
+      PENWIDTH="0.35"
+   ;;
+
+   K)
+      PJLSIZEPARM="@PJL SET PAPER = ANY"
+      HPGLINIT="IN;PS182880,36576;"
+#      MAXLEN="180"
+      PENWIDTH="0.35"
+   ;;
+
+esac
+
+
+###############################################################
+## Typical PCL to pre-pend to HPGL2 for HP LaserJet printers:
+##  PCLSTART="%-12345XE"
+###############################################################
+
+
+#############################################################################
+##  HERE IS THE PCL-PJL for pre-pending.
+##       Some in-line PJL COMMENTs are there for easy activation.
+#############################################################################
+
+PCLSTART="%-12345X@PJL 
+@PJL COMMENT ** BEGINNING HPGL2 JOB **
+@PJL JOB NAME = \"$USER  `hostname`  `date '+%y%b%d %R%p`\"
+@PJL SET COPIES = $NUMBER_COPIES  	
+@PJL COMMENT *************** Error/Diagnostic Parms ********************
+@PJL COMMENT SET DIAGPAGEENABLE = ON       
+@PJL SET ERRORPAGE = LEVEL2       
+@PJL COMMENT *************** Margin/Origin Parms ***********************
+@PJL COMMENT SET JUSTIFYX = LEFT
+@PJL COMMENT SET JUSTIFYY = BOTTOM
+@PJL JUSTIFYX = 0.0
+@PJL JUSTIFYY = 0.0
+@PJL SET MARGINTOP = 0.0
+@PJL SET MARGINBOTTOM = 0.0
+@PJL SET MARGINLEFT = 0.0
+@PJL SET MARGINRIGHT = 0.0
+@PJL COMMENT *************** Some Assumed Defaults (commented) *********
+@PJL COMMENT SET MEDIASOURCE=AUTO
+@PJL COMMENT SET MEDIATYPE=ANY
+@PJL COMMENT SET PAGESCALING=100
+@PJL COMMENT SET MAXPLOTLEN = 960
+@PJL COMMENT *** Limit plot length (Activate if 960 inch default not good.) ****
+@PJL COMMENT SET MAXPLOTLEN = $MAXLEN
+@PJL COMMENT ******* Allow plotter to determine paper-size (commented)  ****
+@PJL COMMENT SET PAPER=ANY
+@PJL COMMENT SET USEMARKEDAREA = ON
+@PJL COMMENT (*)   This 'USEMARKEDAREA= ON' may be equivalent to
+@PJL COMMENT (*)   'PAPER SIZE DETECT' = 'DRAWN AREA' on the plotting console (model?).
+@PJL COMMENT ******* PAPER-size PJL parm *******************************
+@PJL COMMENT SET PAPER=ANSI_{stdsize-goes-here}
+$PJLSIZEPARM
+@PJL ENTER LANGUAGE = HPGL2
+${HPGLINIT}RO00;AC0,0;SP0;PA0,0;SP1;WU0;PW${PENWIDTH};"
+
+
+###################################################
+## Number-of-Pens/HPGL2-Init Note:
+##     We are not even using an 'NP' command in the top HPGL2 line.
+##     Reportedly, the HPGL standard assumes 8 pens, by default.
+##     The  'RO90;AC0,0;SP0;PA0,0;SP1;WU0;PW0.225;' parms are like
+##     those used by Don Airhart for CADAM plotting.
+###################################################
+
+###################################################
+## JUSTIFY Notes:
+##  A sample Xerox 8830 plot file ('Gold_J.plt') from Xerox web page
+##    http://www.xerox.com/drivers/Xerox_8830/faq8830_05.htm#demodisk
+##  indicates that
+##    @PJL SET JUSTIFYX = 0.0
+##    @PJL SET JUSTIFYY = 0.0
+##  can be used instead of
+##    @PJL SET JUSTIFYX = LEFT
+##    @PJL SET JUSTIFYY = BOTTOM
+###################################################
+
+###################################################
+## Max-plot-length Notes:
+##  - MAXPLOTLEN, if used, is specified in inches.
+##  - The Xerox 8830 default is 960 inches (80 feet).
+##  - The allowable range of values for MAXPLOTLEN
+##    is 4*12=48 inches to 80*12=960 inches.
+###################################################
+
+###################################################
+## ENTER-LANGUAGE Notes:
+##
+## "LANGUAGE = HPGL2" and "LANGUAGE = HP-GL/2"
+##                 are reportedly treated the same.
+## "LANGUAGE = HPGL" and "LANGUAGE = HPGL758X"
+##                 are reportedly treated the same.
+## See  .../helps/xerox_plot_control_8830.pdf
+##                 referenced below at a Xerox example.
+###################################################
+
+###################################################
+## MEDIA Notes:
+##   The following PJL 'SET MEDIA...' commands may be useful
+##   to specify a particular media-type loaded in a special
+##   drawer on certain Xerox 8830 plotters, in the future:
+##
+## @PJL SET MEDIATYPE=ANY  (default)  Options:
+##                          {PAPER, VELLUM, FILM, ANY}
+##
+## @PJL SET MEDIASOURCE=AUTO  (default)   Options:
+## {TRAY1, TRAY2, TRAY3, ROLL1, ROLL2, ROLL3, MANUAL_FD, AUTO}
+##
+##  Also, see the MM_MODE_* parms. (Media Mismatch MODE)
+###################################################
+
+###################################################
+## Xerox example:
+##      This example is (with small changes)
+##      from page 77 of 
+##      .../helps/xerox_plot_control_8830.pdf
+##           available via 'iad' opt 'h x1',
+##           where 'iad' = .../scripts/iad
+## Web Reference:
+##      http://www.xerox.com/drivers/Xerox_8830/ctlr25.htm
+##
+## PCLSTART="%-12345X@PJL
+## @PJL COMMENT ** BEGINNING HPGL2 JOB **	
+## @PJL JOB NAME = \"FROM USER: $USER  AT HOST: `hostname`   `date`\"
+## @PJL SET MEDIASOURCE=AUTO
+## @PJL SET COPIES = $NUMBER_COPIES
+## @PJL SET PAPER=ANSI_${FE_PAPERSIZE}
+## @PJL SET MEDIATYPE=PAPER
+## @PJL SET PAGESCALING=100
+## @PJL ENTER LANGUAGE = HPGL2"
+###################################################
+
+###################################################
+## Xerox LABELLING example:
+##      This LABELLING example is from page 77 of 
+##      .../helps/xerox_plot_control_8830.pdf 
+##           available via 'iad' opt 'h x1',
+##           where 'iad' = .../scripts/iad
+## Web Reference:
+##      http://www.xerox.com/drivers/Xerox_8830/ctlr25.htm
+##
+## PCLSTART="%-12345X@PJL 
+## @PJL COMMENT ** BEGINNING HPGL2 JOB **
+## @PJL JOB NAME = \"FROM USER: $USER  AT HOST: `hostname`   `date`\"
+## @PJL COMMENT -- Set up label --
+## @PJL SET LABELSTRING="Label on Plot"
+## @PJL SET LABELLOCX = CENTER 
+## @PJL SET LABELLOCY = TOP 
+## @PJL SET LABELSHADING = 50 
+## @PJL SET LABELSIZE = 14 
+## @PJL SET LABELROTATE = 45 
+## @PJL SET LABELFONTOBJ = "HP2 Stick Font - Proportional"
+## @PJL ENTER LANGUAGE = HPGL2"
+###################################################
+
+###################################################
+## A LABELLING example (ready to implement; someday?):
+##
+## PCLSTART="%-12345X@PJL 
+## @PJL .....
+## @PJL COMMENT ***** LABEL **********************
+## @PJL SET LABELSTRING=\"FROM USER: $USER  AT HOST: `hostname`   `date`\"
+## @PJL SET LABELLOCX = LEFT 
+## @PJL SET LABELLOCY = BOTTOM 
+## @PJL SET LABELSHADING = 50 
+## @PJL SET LABELSIZE = 14 
+## @PJL SET LABELROTATE = 90 
+## @PJL SET LABELFONTOBJ = "HP2 Stick Font - Proportional"
+## @PJL .....
+## @PJL ENTER LANGUAGE = HPGL2"
+##  
+###################################################
+
+#############################################################################
+## HERE IS THE X8830 PCL-PJL code for appending.
+#############################################################################
+## NOTE: An application-created HPGL2 file may end with the line  "PUSP0PG;" ,
+##       after all the PU & PD commands on separate lines.
+#############################################################################
+
+PCLEND="%-12345X@PJL 		
+@PJL COMMENT ** END OF HPGL JOB ** 	
+@PJL EOJ 	
+%-12345X"
+
+#############################################################################
+## For comparison:
+##      Typical PCL to append to HPGL2 for HP LaserJet printers:
+##         PCLEND="%1AE%-12345X"
+##      or PCLEND="E%-12345X"
+#############################################################################
+
+
+#############################################################################
+######  EXAMPLE SCRIPT to SEND FILE TO PRINTER-PLOTTER   ####################
+#############################################################################
+####
+#### The loop to get $NUMBER_COPIES copies of the plot is commented below
+#### because we use the PJL COPIES statement to try to generate
+#### multiple copies without sending multiple copies of the plot file
+#### over the network.  
+####
+####              (NUMBER_COPIES may typically be exported
+####               from an applicaton plot script.)
+#############################################################################
+
+## TMPCNT=1
+## while test $TMPCNT -le $NUMBER_COPIES
+## do
+
+      set -x
+
+###############################################
+##  Send the *ENTIRE* application-created HPGL2
+##  plot file into the print command --
+##  with pre-pended & appended PJL-PCL for 
+##  the Xerox 8830.
+###############################################
+
+##      ( echo "${PCLSTART}" ; cat $PLOT_FILENAME ; echo "${PCLEND}" ) \
+
+
+###########################################
+##  COULD USE tail +2 to remove the top line of
+##  the HPGL2 data file -- which contains
+##  <ESC>%-1B, with a leading blank.
+##
+##  This is just in case this PCL code, that
+##  indicates the following cmds are HPGL2,
+##  might cause problems to the Xerox 8830.
+##
+##    The "@PJL ENTER LANGUAGE = HPGL2" PJL
+##    statement should suffice to switch the
+##    plotter to HPGL2 mode.
+###########################################
+
+##     ( echo "${PCLSTART}" ; tail +2 $PLOT_FILENAME ; echo "${PCLEND}" ) \
+
+###########################################
+##  The presence of blanks leading the X,Y
+##  co-ordinates on PU & PD HPGL2 commands
+##  causes the Xerox 8830 to frequently
+##  plot only a blank page.  
+##
+##  We use "sed 's| ||g'" to remove all
+##  blanks from the plot file.
+##      Also, we use "sed '1d;2d'" to remove
+##      the first two lines.
+##  We do both in one cmd: "sed '1d;2d;s| ||g'"
+###########################################
+
+( echo "${PCLSTART}" ; sed '1d;2d;s| ||g' $PLOT_FILENAME ; echo "${PCLEND}" ) \
+           | $FE_PRT_CMD
+
+## To add carriage returns with each line-feed:
+
+##         | .../scripts/carr_ret_add | $FE_PRT_CMD
+
+## To try the HPGL file to a Xerox 8830 without any PCL-PJL:
+
+##      cat $PLOT_FILENAME | $FE_PRT_CMD
+
+      set -
+
+##    TMPCNT=`expr $TMPCNT + 1`
+## 
+##  done
+
+
+
+
+
+
+######
+## END OF guide for Hewlett-Packard  PCL (and PJL)  Printer Commands
+######

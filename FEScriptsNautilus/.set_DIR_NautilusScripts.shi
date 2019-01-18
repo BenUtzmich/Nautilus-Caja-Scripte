@@ -1,0 +1,45 @@
+##
+## 'INCLUDE' SCRIPT: set_DIR_NautilusScripts.shi
+##
+##  Where:          in $HOME/.freedomenv/feNautilusScripts/
+##
+##                            where .freedomenv is a 'hidden' directory
+##                                  for configuration files of
+##                                  FE=FreedomEnvironment subsystems.
+##############################################################################
+## PURPOSE: This 'include' shell script is meant to be used in scripts of
+##          the 'FE Nautilus Scripts' subsystem --- to set the directory
+##          location for Nautilus Scripts --- in environment variable
+##          'DIR_NautilusScripts'.
+##
+##          For Gnome2, the Nautilus Scripts directory location is/was
+##              $HOME/.gnome2/nautilus-scripts
+##
+##          If the Gnome-Nautilus developers change the location for
+##          users' Nautilus Scripts, only this one script, in the FE
+##          Nautilus Scripts subsystem, needs to be changed.
+##############################################################################
+## CALLED BY: many scripts in the 'FE Nautilus Scripts' subsystem.
+##
+##     For example, called by the 'FE Nautilus Scripts' that need to
+##     set a viewer or editor variable, such as TXTVIEWER or IMGEDITOR.
+##     --- so that the script can find the utility script that sets
+##     the viewer and editor vars.
+##
+##############################################################################
+## FE system Copyright 2006+ by Blaise Montandon
+##############################################################################
+## MAINTENANCE HISTORY:
+## Created by: Blaise Montandon 2011may10 Started this script for the
+##                                        'FE Nautilus Scripts' subsystem of
+##                                        the FE system.
+## Updated by: Blaise Montandon  
+##############################################################################
+
+## FOR TESTING: (show statements as they execute)
+# set -x
+
+DIR_NautilusScripts="$HOME/.gnome2/nautilus-scripts"
+
+
+

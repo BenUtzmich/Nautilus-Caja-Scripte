@@ -1,0 +1,20 @@
+#!/usr/bin/wish
+##
+## Nautilus
+## SCRIPT: .list_fonts_TclTk.tk
+##
+## PURPOSE: List fonts known to Tcl-Tk --- to standard out.
+##
+## HOW TO USE: Called by the script 00_list_fonts_TclTk.sh
+##
+## Created: 2010jun01
+## Changed:
+
+set FONTFAMS [lsort [font families]]
+
+set FONTFAMS2 [join $FONTFAMS "\n"]
+
+puts $FONTFAMS2
+
+exit
+

@@ -1,0 +1,445 @@
+
+<!-- This file is for
+     $HOME/.gnomeN/nautilus-scripts/zMORE/PLOTtools/.examples/
+        gnuplot_examples_TableOfTextareas_textareasDownPage.htm
+-->
+
+<html>
+
+<head>
+
+<title>
+'gnuplot' CODE EXAMPLES - 'gnuplot' COMMAND SCRIPTS, INPUT DATA FILES
+</title>
+
+</head>
+
+<!-- ######### END of HEAD.   START of BODY. ############# -->
+
+<body background="./tile_ripple_gray_320x200.jpg"
+      bgcolor="#ccccff" text="#000000"
+      style="margin-top:0em;margin-left:0em;margin-right:0em">
+
+<a name="above_TOP"></a>
+
+<!-- ######################################################### -->
+<!-- #################  START of TITLE BLOCK   ############### -->
+<!-- ######################################################### -->
+
+<table align="center" border="3" cellpadding="9" cellspacing="0" width="100%">
+<tr>
+
+
+<!-- ## COMMENTED ##, for now
+<td align="left" bgcolor="#ffffff" style="border-style:none">
+<a
+onmouseover="document['picpair0'].src='./decopics/def_310x260.jpg'"; 
+onmouseout="document['picpair0'].src='./decopics/abc_300x250.jpg'";
+>
+<img name="picpair0" src="./decopics/abc_300x250.jpg">
+</a>
+</td>
+-->
+
+
+<td align="middle" bgcolor="#ffffff" style="border-style:ridge none ridge none">
+<h1 align="center">
+'gnuplot' CODE EXAMPLES 
+</h1>
+<h3 align="center">
+'gnuplot' COMMAND SCRIPTS and INPUT DATA FILES
+</h3>
+<h3 align="center">
+in scrollable text areas below a Table-of-contents.
+</h3>
+</td>
+
+
+<!-- ## COMMENTED ##, for now
+<td align="right" bgcolor="#ffffff" style="border-style:none">
+<a
+onmouseover="document['picpair1'].src='./decopics/def_310x260.jpg'"; 
+onmouseout="document['picpair1'].src='./decopics/abc_300x250.jpg'";
+>
+<img name="picpair1" src="./decopics/abc_300x250.jpg">
+</a>
+</td>
+-->
+
+
+</tr>
+</table>
+
+<!-- ############################################################# -->
+<!-- ################## END of TITLE BLOCK ####################### -->
+<!-- ############################################################# -->
+
+<p align="center">
+<a href="#above_TOC"> &lt; Go to Table of Contents, below. &gt; </a>
+<br>
+(skip the Intro)
+
+
+<p align="center">
+<! Preliminary ! More example gnuplot-scripts are to be added.
+
+
+<!-- ##################################################### -->
+<!-- ################## START OF INTRO BLOCK ############# -->
+<!-- ##################################################### -->
+
+<p align="center">
+<table border="3" cellpadding="9" cellspacing="0" width="80%">
+<tr>
+<td bgcolor="#f0f0f0">
+
+<p>
+<b>INTRODUCTION :</b>
+
+<p align="justify">
+Unfortunately, the books and user manuals on 'gnuplot' tend to present
+lots of 'snippets' of commands --- but not many complete command
+examples.
+
+<p align="justify">
+This guide is intended to fill that void by presenting <b>ONLY complete
+working examples</b>. Those that require an input data set will have the
+dataset presented toward the bottom of this guide.
+
+<p align="justify">
+Since there are many optional parameters available for gnuplot commands,
+including
+<ul>
+    <li> line widths
+    <li> line styles
+    <li> fonts
+    <li> etc.
+</ul>
+ <p align="justify">     
+there will be comments above or below many of the command lines in
+these examples, to explain some of those options.
+The comments will (hopefully) provide a clear idea
+of some of the more useful options available to the user.
+
+<p>
+<hr>
+
+ <p align="justify">
+ You can navigate to the gnuplot-script examples by using the
+ following Table of Contents.
+ 
+ <p align="justify">
+ OR, you can use the 'Find Text' option of your web browser to
+ find keywords in the text in this page (including the code in
+ the gnuplot-scripts) --- keywords such as 'label', 'title',
+ 'xtic', 'legend', 'timestamp', etc.
+ 
+</td>
+</tr>
+</table>
+
+<!-- ############################################################ -->
+<!-- ##################    END OF INTRO SECTION   ############### -->
+<!-- ############################################################ -->
+
+
+<!-- ############################################################ -->
+<!-- #########   START OF TABLE-OF-CONTENTS SECTION.   ########## -->
+<!-- ############################################################ -->
+
+<a name="above_TOC"></a>
+
+<p align="center">
+<table border="3" cellpadding="9" cellspacing="0" width="85%">
+<tr>
+<td bgcolor="#ffffff">
+
+<h4>
+Table of Contents: &nbsp; &nbsp;
+</h4>
+
+<p align="center">
+ (links to gnuplot-scripts and data-files on this page)
+ 
+ <p>
+ <hr>
+ 
+<p>
+<a href="#above_SCRIPTS">
+Example GNUPLOT-SCRIPTS :</a>
+
+<ul>
+
+    <li> <p align="justify">
+         <a href="#scr_lineplot">
+         LINE-PLOT example</a><br>
+
+    <li> <p align="justify">
+         <b>side-by-side BAR CHART ('histogram') example</b>, coming
+
+    <li> <p align="justify">
+         <b>stacked BAR CHART ('histogram') example</b>, coming
+
+</ul>
+
+<p>
+<hr>
+
+<p>
+<a href="#above_DATA">
+Example INPUT DATA-FILES :</a>
+
+<ul>
+
+    <li> <p align="justify">
+         <a href="#data_worldpop">
+         World Population (0 to 2000 A.D.)</a>
+
+</ul>
+
+<p>
+<hr>
+
+<p align="left">
+<b>End of Table of Contents.</b> See the presentation notes below.
+
+</td>
+</tr>
+</table>
+
+<!-- ############################################################ -->
+<!-- #########     END OF TABLE-OF-CONTENTS SECTION.   ########## -->
+<!-- ############################################################ -->
+
+
+<!-- ############################################################ -->
+<!-- #####      PRESENTATION DESCRIPTION BLOCK         ########## -->
+<!-- ############################################################ -->
+
+<p align="center">
+<table border="3" cellpadding="9" cellspacing="0" width="80%">
+<tr>
+<td bgcolor="#f0f0f0">
+
+<p>
+<b>How the code samples (below) are presented - and other notes :</b>
+
+<p align="justify">
+Each code 'sample' is presented via an HTML 'textarea'
+so that you can scroll the text, vertically or
+horizontally --- if the text is many-lined or wide.
+
+<p align="justify">
+There are a lot of comments in the scripts. The comment lines start
+with a '#' (hash) sign. Generally, there will be a <b>single hash sign</b>
+on lines that contain valid commands that could be executed if
+de-commented.  A <b>double-hash</b> indicates a line that should
+never be de-commented, because it is not executable gnuplot command,
+rather it is text for information only.
+
+<p align="justify">
+Use the table-of-contents (above) to go directly to code samples.
+OR simply scroll down this page to spot samples of interest.
+
+<p align="justify">
+Alternatively,
+use the 'Find text' option of your web browser to look for keywords
+on this page.
+
+<p>
+<hr>
+
+<p align="justify">
+The code is presented here mostly for my own personal
+use --- as a reference and as a means of archival and backup.
+I may use portions of the scripts for working code fragments
+to be applied in other scripts. If others use these scripts, they should
+<b>test them on test data before using in a 'serious' mode</b>.
+
+<p align="justify">
+Since these scripts do not change any files, they should not
+cause any harm other than creating some small plot image files that
+take up some disk space.
+
+<p align="justify">
+However, when anyone uses these scripts, they are hereby notified that
+they do so at their own risk.
+
+</td>
+</tr>
+</table>
+
+
+<!-- ############################################################ -->
+<!-- #########    START OF GNUPLOT-SCRIPT EXAMPLES     ########## -->
+<!-- ############################################################ -->
+
+<a name="above_SCRIPTS"></a>
+
+<p>
+<hr size="10" width="30%" align="left">
+
+<ul>
+<h2 align="left">
+GNUPLOT-SCRIPTS :</a>
+</h2>
+
+<p>
+<h5 align="left">
+<a href="#above_TOC">&lt; Return to Table of Contents, above. &gt;</a><br>
+</h5>
+</ul>
+
+<p align="center">
+<table border="4" cellpadding="6" cellspacing="0" width="85%">
+<tr>
+<td bgcolor="#efefef">
+
+<!-- ############### TEXTAREA 1 - lineplot ################ -->
+
+<p>
+<a name="scr_lineplot">
+<b>LINE PLOT example :</b></a>
+
+<p align="center">
+<object data="./gnuplot_CMDS_world_population_LINEplot.sh.txt"
+         type="text/plain" width="640" height="280">
+File is not shown. Technical difficulties.
+</object>
+
+<p>
+<hr>
+
+<p>
+Other examples are to be added.
+
+<!-- ############### TEXTAREA 2 - barchart - 2 ################ -->
+
+<!--
+<p>
+<hr>
+
+<p>
+<a name="scr_lineplot">
+<b>BAR CHART example :</b></a>
+
+<p align="center">
+<object data="./yadayadayada.sh.txt"
+         type="text/plain" width="640" height="280">
+File is not shown. Technical difficulties.
+</object>
+-->
+
+</td>
+</tr>
+</table>
+
+
+<!-- ############################################################ -->
+<!-- #########    START OF GNUPLOT-DATA-FILE EXAMPLES    ######## -->
+<!-- ############################################################ -->
+
+<a name="above_DATA"></a>
+
+<p>
+<hr size="10" width="30%" align="left">
+
+<ul>
+<h2 align="left">
+GNUPLOT INPUT-DATA-FILE examples :
+</h2>
+
+<p>
+<h5 align="left">
+<a href="#above_TOC">&lt; Return to Table of Contents, above. &gt;</a><br>
+</h5>
+</ul>
+
+<p align="center">
+<table border="4" cellpadding="6" cellspacing="0" width="85%">
+<tr>
+<td bgcolor="#efefef">
+
+<!-- ########### TEXTAREA 1 - World Pop data ############ -->
+
+<p>
+<a name="data_worldpop">
+WORLD-POPULATION DATA example :</a>
+
+<p align="center">
+<object data="./gnuplot_DATA_world_population.txt"
+         type="text/plain" width="640" height="280">
+File is not shown. Technical difficulties.
+</object>
+
+
+<p>
+<hr>
+
+<p>
+Other examples are to be added.
+
+
+<!-- ############ TEXTAREA 2 - ??? data ########### -->
+
+<!--
+<p>
+<hr>
+
+<p>
+<a name="data_???">
+??? DATA example :</a>
+
+<p align="center">
+<object data="./yadayadayada.txt"
+         type="text/plain" width="640" height="280">
+File is not shown. Technical difficulties.
+</object>
+-->
+
+
+</td>
+</tr>
+</table>
+
+
+<!-- ############################################################ -->
+<!-- ########  END of OBJECT (text-area) GROUPS   ############### -->
+<!-- ############################################################ -->
+
+
+
+<!-- ################################################### -->
+<!-- ########## BOTTOM OF PAGE.  END of BODY. ########## -->
+<!-- ################################################### -->
+
+<p align="center" style="page-break-before: always">
+<table border="3" cellpadding="9" cellspacing="0" width="65%">
+<tr>
+<td bgcolor="#cccccc">
+
+<p align="justify">
+<b>Bottom</b> of the <b>GNUPLOT EXAMPLES - SCRIPTS and DATA-FILES</b>
+page.
+
+<p>
+<h5 align="center">
+<a href="#above_TOC">&lt; Go to Table of Contents, above. &gt;</a><br>
+<a href="#above_TOP">&lt; Go to Top of Page, above. &gt;</a>
+</h5>
+
+<p>
+OR, exit this page.
+
+<p>
+Page created 2011 Jul 14.
+
+
+</td>
+</tr>
+</table>
+
+
+</body>
+</html>
+

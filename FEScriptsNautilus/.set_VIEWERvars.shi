@@ -1,0 +1,155 @@
+##
+## Nautilus 'INCLUDE'
+## SCRIPT: set_VIEWERvars.shi
+##
+## PURPOSE: Called by FE Nautilus Scripts to set various env vars
+##          --- mostly 'viewer' (or 'editor') vars. Examples:
+##              TXTVIEWER, TXTEDITOR, HTMLVIEWER, PDFVIEWER,
+##              IMGVIEWER, IMGEDITOR, ANIGIFVIEWER,
+##              AUDIOPLAYER, AUDIOEDITOR, MOVIEPLAYER, MOVIEEDITOR
+##
+## HOW TO USE this file:
+##
+## Put statements like the following in any FE Nautilus Script
+## that needs to view a text file:
+##
+##    . $HOME/.freedomenv/feNautilusScripts/set_DIR_NautilusScripts.shi
+##    . $DIR_NautilusScripts/.set_VIEWERvars.shi
+##    $TXTVIEWER "$OUTLIST" &
+##
+## To bring up a resultant image file in an image editor:
+##
+##    . $HOME/.freedomenv/feNautilusScripts/set_DIR_NautilusScripts.shi
+##    . $DIR_NautilusScripts/.set_VIEWERvars.shi
+##    $IMGEDITOR "$IMGFILE"
+##
+## To bring up a resultant HTML file in a web browser:
+##
+##    . $HOME/.freedomenv/feNautilusScripts/set_DIR_NautilusScripts.shi
+##    . $DIR_NautilusScripts/.set_VIEWERvars.shi
+##    $HTMLVIEWER "$HTMLFILE"
+##
+## (The ampersand after a call is up to the user.
+##  Whatever seems to be necessary or desirable in the given script.)
+##
+## Started: 2010sep01
+## Changed: 2010sep06 Added vars: TXTEDITOR, HTMLVIEWER, IMGVIEWER, IMGEDITOR
+## CHanged: 2011jun08 Added vars: AUDIOPLAYER, AUDIOEDITOR, MOVIEPLAYER, MOVIEEDITOR
+
+## FOR TESTING: (show statements as they execute)
+# set -x
+
+##########################
+## Set the TXTVIEWER var.
+##########################
+
+# TXTVIEWER="/usr/bin/nedit -read"
+# TXTVIEWER="/usr/bin/kwrite"
+# TXTVIEWER="/usr/bin/kate"
+# TXTVIEWER="/usr/bin/gedit"
+# TXTVIEWER="$HOME/apps/feXpg_2011may20/scripts/xpg"
+# TXTVIEWER="$HOME/apps/feXpg/scripts/xpg"
+  TXTVIEWER="$HOME/apps/bin/xpg"
+
+##########################
+## Set the TXTEDITOR var.
+##########################
+
+# TXTEDITOR="/usr/bin/nedit -read"
+# TXTEDITOR="/usr/bin/kwrite"
+# TXTEDITOR="/usr/bin/kate"
+# TXTEDITOR="/usr/bin/scite"
+  TXTEDITOR="/usr/bin/gedit"
+
+
+##########################
+## Set the HTMLVIEWER var.
+##########################
+
+# HTMLVIEWER="/usr/bin/firefox"
+# HTMLVIEWER="$HOME/apps/seamonkey/seamonkey"
+  HTMLVIEWER="$HOME/apps/seamonkey2-10/seamonkey/seamonkey"
+# HTMLVIEWER="/usr/bin/seamonkey"
+# HTMLVIEWER="/usr/bin/midori"
+
+##########################
+## Set the PDFVIEWER var.
+##########################
+
+# PDFVIEWER="/usr/bin/xpdf"
+  PDFVIEWER="/usr/bin/evince"
+ 
+
+##########################
+## Set the IMGVIEWER var.
+##########################
+
+# IMGVIEWER="/usr/bin/mirage"
+# IMGVIEWER="/usr/bin/mtpaint"
+  IMGVIEWER="/usr/bin/eog"
+
+##########################
+## Set the IMGEDITOR var.
+##########################
+
+# IMGEDITOR="/usr/bin/mirage"
+  IMGEDITOR="/usr/bin/mtpaint"
+# IMGEDITOR="/usr/bin/gimp"
+
+
+##########################
+## Set the ANIGIFVIEWER var.
+##########################
+
+# ANIGIFVIEWER="/usr/bin/firefox"
+# ANIGIFVIEWER="/usr/bin/mirage"
+# ANIGIFVIEWER="/usr/bin/animate"
+  ANIGIFVIEWER="$HOME/apps/seamonkey2-10/seamonkey/seamonkey"
+# ANIGIFVIEWER="/usr/bin/gifview -a"
+
+
+##########################
+## Set the AUDIOPLAYER var.
+##########################
+
+# AUDIOPLAYER="/usr/bin/gmplayer"
+# AUDIOPLAYER="/usr/bin/smplayer"
+# AUDIOPLAYER="/usr/bin/ffplay"
+  AUDIOPLAYER="/usr/bin/totem"
+# AUDIOPLAYER="/usr/bin/vlc"
+# AUDIOPLAYER="/usr/bin/audacity"
+
+##########################
+## Set the AUDIOEDITOR var.
+##########################
+
+# AUDIOEDITOR="/usr/bin/ardour"
+  AUDIOEDITOR="/usr/bin/audacity"
+
+
+##########################
+## Set the MOVIEPLAYER var.
+##########################
+
+# MOVIEPLAYER="/usr/bin/gmplayer"
+# MOVIEPLAYER="/usr/bin/gnome-mplayer"
+# MOVIEPLAYER="/usr/bin/smplayer"
+# MOVIEPLAYER="/usr/bin/ffplay"
+  MOVIEPLAYER="/usr/bin/totem"
+# MOVIEPLAYER="/usr/bin/vlc"
+
+###########################
+## Set the MOVIEEDITOR var.
+##################################################
+## Some of these may not work as intended because
+## they require a project file as 'normal' input
+## --- movies are imported as 'clips'.
+##     May need a 'wrapper' script to achieve the
+##     desired function.
+##################################################
+
+# MOVIEEDITOR="/usr/bin/avidemux"
+# MOVIEEDITOR="/usr/bin/cinelarra"
+  MOVIEEDITOR="/usr/bin/kdenlive"
+# MOVIEEDITOR="/usr/bin/openshot"
+

@@ -1,0 +1,45 @@
+Hello:  This is IVRead,
+  a program which can convert some files from
+  some 3D graphics format to some others:
+ 
+    ".ase"  3D Studio Max ASCII export;
+    ".byu"  Movie.BYU surface geometry;
+    ".dxf"  AutoCAD DXF;
+    ".hrc"  SoftImage hierarchy;
+    ".iv"   SGI Open Inventor;
+    ".obj"  WaveFront Advanced Visualizer;
+    ".off"  Geomview OFF file;
+    ".oogl" OOGL file (input only);
+    ".pov"  Persistence of Vision (output only);
+    ".ps"   PostScript (output only)(NOT READY);
+    ".smf"  Michael Garland's format;
+    ".stl"  ASCII StereoLithography;
+    ".stla" ASCII StereoLithography;
+    ".tec"  TECPLOT (output only);
+    ".tri"  [Greg Hood triangles, ASCII];
+    ".tria" [Greg Hood triangles, ASCII];
+    ".ts"   Mathematica ThreeScript (output only);
+    ".3s"   Mathematica ThreeScript (output only);
+    ".txt"  Text (output only);
+    ".ucd"  AVS unstructured cell data (output only);
+    ".vla"  VLA; (points and lines);
+    ".wrl"  VRML;
+    ".xgl"  XGL (output only) (DEVELOPMENT)
+    ".xyz"  XYZ (points and lines);
+ 
+  Current limits:
+ 
+   50000 points;
+   50000 line items;
+   50000 faces.
+ 
+       6 vertices per face;
+    1000 points to display;
+     200 materials;
+      10 textures.
+ 
+  Last modified: 04 June 2002.
+ 
+  By burkardt@iastate.edu.
+ 
+

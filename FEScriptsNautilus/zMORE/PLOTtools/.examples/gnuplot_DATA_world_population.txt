@@ -1,0 +1,43 @@
+## World population growth data.
+##
+## Column1: years A.D.
+## Column2: estimated world population in millions
+##
+## Data points from http://www.census.gov/ipc/www/worldhis.html
+## and
+## http://www.un.org/esa/population/publications/sixbillion/sixbilpart1.pdf
+##
+## The population data is taken from the 'lower' estimates column of
+## that 1st web page --- column 2 on that page (1AD to 1950).
+## Data for years between 1960 and 1999 are from the un.org PDF file.
+##
+## The Black Plague occurred around 1300-1400, where there is a dip in the estimates.
+##
+1 170
+200 190
+600 200
+800 220
+1000 254
+1100 301
+1200 360
+1250 400
+1300 360
+1340 443
+1400 350
+1500 425
+1600 545
+1650 470
+1700 600
+1750 629
+1800 813
+1850 1128
+1900 1550
+1910 1750
+1920 1860
+1930 2070
+1940 2300
+1950 2400
+1960 3000
+1974 4000
+1987 5000
+1999 6000

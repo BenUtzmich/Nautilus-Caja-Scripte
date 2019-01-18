@@ -1,0 +1,129 @@
+###################
+ASCII CONTROL CODES - for decimal 0 thru 37 (hex 00 thru 1F ; octal 000 thru 037)
+###################
+
+The ONE-BYTE control codes below can be pasted into text files.
+
+For example, the Escape code (corresponding to decimal 27) is handy to paste into
+files such as script files that send control codes and commands to printers.
+
+The control codes are in the FIRST BYTE (character) of each line, below.
+
+The NUL code (octal 000) was causing a problem in getting the rest of the
+lines into this file, so the first byte of the NUL line is simply a space,
+NOT the NUL control code (hex 00 or 8 zero bits). [The NUL code is interpreted
+as an end-of-file indicator by some programs/commands.]
+
+----------------------------------------------------------------------------------
+
+NOTE:
+      The control codes will display differently in different editors or
+      text display utilities.
+
+-----
+gedit:
+
+      If you bring up this text file in the 'gedit' Gnome text editor,
+      the ONE-byte control codes show as a little square, the size of
+      ONE character.
+      For example:
+      The one-byte 'escape-code' (corresponding to decimal 27, hex 1B),
+      shows as a little square --- with '0 0' in a tiny little first row
+      within the square and '1 B' in the tiny second row.
+
+      In 'gedit', there are a few codes for which you will not see the
+      'little square'. You will see that the 'line-feed' and 'carriage-return'
+      lines appear as if a blank line is above them --- and the columns of
+      text are shifted to the left.
+
+      Also in 'gedit', the 'horizontal tab'  line has the columns of text
+      shifted to the right --- and no little square.
+
+      Because such shifts and blank lines make it difficult to tell just where
+      the control code was, a period (.) was put on the right of each control
+      code. So the control code is (or was) just to the left of that period
+      (or on the blank/null line just above the period).
+
+-----
+nedit:
+
+      In the 'nedit' text editor, the ONE-byte 'escape-code' is rendered
+      as the FIVE characters '<esc>'.
+
+      The other codes are also shown as 2 or 3 characters with a less-than
+      sign on the left and a greater-than sign on the right.
+
+      The 'horizontal-tab' and the 'line-feed' lines appear like they did
+      in 'gedit'. (See above.)
+
+------
+Tcl-Tk:
+
+      In the text widget of a Tcl-Tk file browser, like in 'xpg' of the FE
+      (Freedom Environment) system, the ONE-byte control codes are rendered
+      as FOUR characters. Example: the 'escape-code' is rendered as
+      '\x1b'. In other words, each control code is rendered as '\x'
+      (back-slash and lower-case x) followed by a 2 character hex code.
+
+      In the text widget of Tcl-Tk, there are a few exceptions. Some codes
+      are rendered as back-slash and a lower-case letter:
+          - The BEL code is rendered as 'back-slash, then a'.
+          - The BS (backspace) code is rendered as 'back-slash, then b'.
+          - The VT (vertical tab) code is rendered as 'back-slash, then v'.
+          - The FF (form feed) code is rendered as 'back-slash, then f'.
+
+      The 3 codes 'line-feed', 'carriage-return', and 'horizontal-tab' are
+      rendered like 'gedit'. (See above.)
+
+------
+kwrite:
+
+      The 'kwrite' window comes up slower than the others, the first time
+      that 'kwrite' is invoked in a session. When the 'kwrite' window appears,
+      it shows the control codes in column one as little one character symbols
+      --- for example, some of them look like musical notes --- one symbol looks
+      an eighth note, one looks like a quarter note, one looks like a pair of
+      eighth notes.
+
+      The line-feed, carriage-return, and horizontal-tab characters are
+      shown like 'gedit' (see above) and the Tcl-Tk text widget.
+
+----------------------------------------------------------------------------------
+
+Ctl         Deci
+Code  Octal mal   Hex   Description
+----  ----- ----  ---   ----------------------
+ .    000   0     00    NUL
+.   001   1     01    SOH (start of heading)
+.   002   2     02    STX (start of text)
+.   003   3     03    ETX (end of text)
+.   004   4     04    EOT (end of transmission)
+.   005   5     05    ENQ (enquiry)
+.   006   6     06    ACK (acknowledge)
+.   007   7     07    BEL (bell)
+.   010   8     08    BS  (backspace)
+	.   011   9     09    HT  (horizontal tab)
+
+.   012   10    0A    LF  (new line)
+.   013   11    0B    VT  (vertical tab)
+.   014   12    0C    FF  (form feed)
+.   015   13    0D    CR  (carriage ret)
+.   016   14    0E    SO  (shift out)
+.   017   15    0F    SI  (shift in)
+.   020   16    10    DLE (data link escape)
+.   021   17    11    DC1 (device control 1)
+.   022   18    12    DC2 (device control 2)
+.   023   19    13    DC3 (device control 3)
+.   024   20    14    DC4 (device control 4)
+.   025   21    15    NAK (negative ack.)
+.   026   22    16    SYN (synchronous idle)
+.   027   23    17    ETB (end of trans. blk)
+.   030   24    18    CAN (cancel)
+.   031   25    19    EM  (end of medium)
+.   032   26    1A    SUB (substitute)
+.   033   27    1B    ESC (escape)
+.   034   28    1C    FS  (file separator)
+.   035   29    1D    GS  (group separator)
+.   036   30    1E    RS  (record separator)
+.   037   31    1F    US  (unit separator)
+

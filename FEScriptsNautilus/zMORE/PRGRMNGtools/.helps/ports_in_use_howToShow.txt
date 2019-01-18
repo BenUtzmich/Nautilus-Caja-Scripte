@@ -1,0 +1,51 @@
+Command to show ports in use on a host
+
+
+/usr/etc/netstat -aqn 
+
+or
+
+/usr/etc/netstat -an
+
+or
+
+/usr/etc/netstat -an | sort
+
+or
+
+/usr/etc/netstat -an -f inet | sort
+
+----------------------------------
+
+To see the port numbers that are in the range 27000 to 27009, for example:
+
+/usr/etc/netstat -an  | grep 2700
+
+or
+
+/usr/etc/netstat -an -f inet | grep 2700
+
+
+----------------------------------
+
+To see a side-by-side comparison of ports, i.e.
+"Active Internet connections (including servers)"
+in numeric and non-numeric format:
+
+cd /local/scratch/$USER
+/usr/etc/netstat -an -f inet >  netstat_an_f_inet.txt
+/usr/etc/netstat -a  -f inet >  netstat_a_f_inet.txt
+sdiff netstat_an_f_inet.txt netstat_a_f_inet.txt >  sdiff_netstat_a_f_inet.txt
+xpg sdiff_netstat_a_f_inet.txt
+
+----------------------------------
+
+See an implementation of the above code via toolchest-drawers
+
+
+  SGI Toolchest ->
+      HandyTools ->
+        AnyHost - NetComm Queries ->
+            Show 'In-Use' ports  @AnyHost
+
+

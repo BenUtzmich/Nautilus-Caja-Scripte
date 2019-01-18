@@ -1,0 +1,191 @@
+#!/usr/bin/gnuplot
+##
+## 'gnuplot' COMMANDS for 'LINE' plotting of dataset
+##
+##       'gnuplot_DATA_world_population.txt'
+##
+## which is expected to be in the directory 
+## where this gnuplot command script is placed.
+##
+## Example: Make a directory $HOME/GNUPLOT and put this script
+##          and the data file (with the name above) in that
+##          directory.
+##
+## If you change datasets to plot, typically,
+## at least CHANGE the X-AXIS and Y-AXIS range parameters below.
+##
+## Typically,
+## you would copy this gnuplot-commands file to another script-name
+## and edit it, if you want to plot a different datafile.
+##
+#####################################################
+##
+## You could set a working directory for 'gnuplot'.
+## 'gnuplot' would put any 'extra' files here.
+## 
+#  cd "/tmp"
+##
+## But if you do not use a fully-qualified name of the input file,
+## you would typically have to put the input file in the /tmp directory.
+##
+## The following would confirm the location established by the 'cd' command.
+#  ! pwd
+##
+###################################################
+## Set the OUTPUT FILE and TERMINAL for a PNG plot:
+##
+set output '/tmp/gnuplot.png'
+##
+## We set the name of a font file (in '$HOME/.fonts') to use.
+##
+HOMEdir = system( "echo $HOME" )
+##
+## FOR TESTING:
+#  print HOMEdir
+##
+FONT4plot =  HOMEdir . "/.fonts/Comic_Sans_MS.ttf"
+# FONT4plot =  HOMEdir . "/.fonts/Verdana.ttf"
+##
+## FOR TESTING:
+# print FONT4plot
+##
+set terminal png size 1280, 960 enhanced font FONT4plot 24
+##
+##
+## ALTERNATIVELY, could do a GIF plot:
+##
+# set output '/tmp/gnuplot.gif'
+# set terminal gif size 1280, 960 ...etc...
+##
+## ALTERNATIVELY, could do a JPG plot:
+##
+# set output '/tmp/gnuplot.jpg'
+# set terminal jpg size 1280, 960 ...etc...
+##
+## ALTERNATIVELY, could do a SVG plot:
+##
+# set output '/tmp/gnuplot.svg'
+# set terminal svg size 1280, 960 ...etc...
+##
+## ALTERNATIVELY, could do a Postscript plot:
+##
+# set output '/tmp/gnuplot.ps'
+# set terminal ps  ...etc...
+## 
+##################################
+## Set PLOT TITLE (at top of plot):
+## 
+set title 'World Population Growth'
+##
+#########################################
+## Set TIMESTAMP (at bottom-left of plot):
+## 
+set timestamp '%Y %b %d %a %H:%M:%S' bottom offset 2
+##   Y=yyyy  b=mmm  d=dd  a=day-of-week  HMS=hours-mins-secs
+##
+###################
+## Set X-AXIS PARMS:
+## 
+set xlabel 'Year A.D.'
+set xrange [ 0 : 2050 ]
+set xtics border
+# set xtics axis
+##
+## No mid-x-tickmarks:
+# set nomxtics
+##
+## Example of setting x-tic-marks manually --- 0 to 100, every 5 :
+# set xtics 0, 5 , 100
+##
+## To force vertical axis thru x=0, de-comment:
+# set xzeroaxis
+##
+###################
+## Set Y-AXIS PARMS:
+## 
+set ylabel 'World Population (in millions)'
+set yrange [ 0 : 8000 ]
+##
+## To force horizontal axis thru y=0, de-comment:
+# set yzeroaxis
+##
+##############################################
+## Request PLOT LEGEND a.k.a. 'key' --- or not:
+## 
+# set nokey
+##
+  set key top right
+##
+# set key bottom right
+##
+# set key top left
+##
+# set key bottom left
+##
+##
+##################################
+## For an EXPONENTIAL(base e) fit:
+##
+# f(x) = a * exp ( b * x )
+# fit f(x) './gnuplot_DATA_world_population.txt' using 1:2 via a,b
+##
+## and attach the following line (including the leading comma)
+## to the 'plot' command below.
+##
+#  , f(x)  title 'a * exp ( b * x )'  with lines
+##
+##
+###################################
+## ADD A LABEL anywhere on the plot:
+##
+  set label 'Black Plague' at 1000,1200 center
+##
+## If your x-axis went from 0 to 2000, then '1000,-2 center' would locate the
+## label below the x-axis (because of '-2') and just about centered in the
+## x-direction on the plot (because of '1000' and 'center').
+##
+###################################
+## Put ARROW on the plot:
+##
+  set arrow 1 from 1200, 1100 to 1300, 600 lw 4
+##
+##
+######################
+######################
+## The PLOT COMMAND(s):
+##
+##
+plot "gnuplot_DATA_world_population.txt" using 1:2 \
+     title 'World population (millions)' \
+     with lines lw 4 
+##
+## It the data file has another column of data in the 3rd column,
+## to add a 2nd Y-plot, add a back-slash to the line above and
+## MOVE the lines below (including the leading comma) underneath
+## the line above, after removing the leading '#' comment indicators.
+##
+# , './gnuplot_DATA_world_population.txt' using 1:3 \
+#   title 'Y2 legend-label text goes here' \
+#   with lines lw 1
+##
+##
+######################
+## VIEW the image plot:
+##
+## The exclamation point tells gnuplot to pass the command to
+## a shell (a command interpreter for the operating system).
+## 
+! /usr/bin/eog  /tmp/gnuplot.png
+# ! /usr/bin/eog  /tmp/gnuplot.gif
+# ! /usr/bin/eog  /tmp/gnuplot.jpg
+# ! /usr/bin/inkscape  /tmp/gnuplot.svg
+# ! /usr/bin/evince  /tmp/gnuplot.ps
+##
+## The following 'read' can be used to keep the plot window from
+## immediately disappearing --- for example, in a case of running
+## this script via the Nautilus 'Open > Run in terminal' method.
+##
+! read ANY_KEY_to_exit
+##
+## END of 'gnuplot' COMMANDS.
+

@@ -1,0 +1,54 @@
+
+** STANDARD DRAWING and PAGE SIZES **
+                                            (from 'man xpsview' on SGI-IRIX, circa 1995)
+
+   International standard page sizes:          
+
+	  American ANSI	sizes:
+	  A    8.5 x 11.0 in.	  ( 215.9 x 279.4 mm)
+	  B    11.0 x 17.0 in.	  ( 279.4 x 431.8 mm)
+	  C    17.0 x 22.0 in.	  ( 431.8 x 558.8 mm)
+	  D    22.0 x 34.0 in.	  ( 558.8 x 863.6 mm)
+	  E    34.0 x 44.0 in.	  ( 863.6 x 1117.6 mm)
+	  F    28.0 x 40.0 in.	  ( 711.2 x 1016.0 mm)
+	  E1   44.0 x 68.0 in.	  (1117.6 x 1727.2 mm)
+                                            
+	  Metric ISO A sizes:
+	  A0   841.0 x 1189.0 mm  (33.11 x 46.81 in.)
+	  A1   594.0 x 841.0 mm	  (23.39 x 33.11 in.)
+	  A2   420.0 x 594.0 mm	  (16.54 x 23.39 in.)
+	  A3   297.0 x 420.0 mm	  (11.69 x 16.54 in.)
+	  A4   210.0 x 297.0 mm	  ( 8.27 x 11.69 in.)
+	  A5   148.0 x 210.0 mm	  ( 5.83 x 8.27	in.)
+	  A6   105.0 x 148.0 mm	  ( 4.13 x 5.83	in.)
+	  A7   74.0  x 105.0 mm	  ( 2.91 x 4.13	in.)
+	  A8   52.0  x 74.0 mm	  ( 2.05 x 2.91	in.)
+	  A9   37.0  x 52.0 mm	  ( 1.46 x 2.05	in.)
+	  A10  26.0  x 37.0 mm	  ( 1.02 x 1.46	in.)
+
+	  Metric ISO B sizes:
+	  B0   1000.0x 1414.0 mm  (39.37 x 55.67 in.)
+	  B1   707.0 x 1000.0 mm  (27.83 x 39.37 in.)
+	  B2   500.0 x	707.0 mm  (19.68 x 27.83 in.)
+	  B3   353.0 x	500.0 mm  (13.90 x 19.68 in.)
+	  B4   250.0 x	353.0 mm  ( 9.84 x 13.90 in.)
+	  B5   176.0 x	250.0 mm  ( 6.93 x 9.84	in.)
+	  B6   125.0 x	176.0 mm  ( 4.92 x 6.93	in.)
+	  B7   88.0  x	125.0 mm  ( 3.46 x 4.92	in.)
+	  B8   62.0  x	 88.0 mm  ( 2.44 x 3.46	in.)
+	  B9   44.0  x	 62.0 mm  ( 1.73 x 2.44	in.)
+	  B10  31.0  x	 44.0 mm  ( 1.22 x 1.73	in.)
+
+	  Metric ISO C sizes:
+	  C0   914.4 x 1300.5 mm  (36.00 x 51.20 in.)
+	  C1   650.2 x 914.4 mm	  (25.60 x 36.00 in.)
+	  C2   457.2 x 650.2 mm	  (18.00 x 25.60 in.)
+	  C3   325.1 x 457.2 mm	  (12.80 x 18.00 in.)
+	  C4   228.6 x 325.1 mm	  ( 9.00 x 12.80 in.)
+	  C5   162.6 x 228.6 mm	  ( 6.40 x 9.00	in.)
+	  C6   114.3 x 162.6 mm	  ( 4.50 x 6.40	in.)
+	  C7   81.3  x 114.3 mm	  ( 3.20 x 4.50	in.)
+
+
+  *** End of drawing code/size cross-reference list
+

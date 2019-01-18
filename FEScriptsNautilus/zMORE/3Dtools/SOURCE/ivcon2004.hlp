@@ -1,0 +1,45 @@
+IVCON:
+  C++ version
+  Read, interpret, and write out graphics information
+  in a variety of formats.
+
+  Compiled on Jan 10 2011 at 15:48:10
+
+Hello:  This is IVCON,
+  for 3D graphics file conversion.
+
+    ".3ds"   3D Studio Max binary;
+    ".ase"   3D Studio Max ASCII export;
+    ".byu"   Movie.BYU surface geometry;
+    ".dxf"   DXF;
+    ".gmod"  Golgotha model;
+    ".hrc"   SoftImage hierarchy;
+    ".iv"    SGI Open Inventor;
+    ".obj"   WaveFront Advanced Visualizer;
+    ".off"   GEOMVIEW Object File Format;
+    ".pov"   Persistence of Vision (output only);
+    ".smf"   Michael Garland's format;
+    ".stl"   ASCII StereoLithography;
+    ".stla"  ASCII StereoLithography;
+    ".stlb"  Binary StereoLithography;
+    ".tec"   TECPLOT (output only);
+    ".tri"   [Greg Hood ASCII triangle format];
+    ".tria"  [Greg Hood ASCII triangle format];
+    ".trib"  [Greg Hood binary triangle format];
+    ".txt"   Text (output only);
+    ".ucd"   AVS UCD file(output only);
+    ".vla"   VLA;
+    ".wrl"   VRML (Virtual Reality Modeling Language) (output only).
+    ".xgl"   XML/OpenGL format (output only);
+
+  Current limits include:
+    200000 faces.
+    100000 line items.
+    200000 points.
+    10 face order.
+    100 materials.
+    100 textures.
+
+  Last modification: 04 September 2003.
+
+

@@ -1,0 +1,208 @@
+FROM: http://linuxgazette.net/issue65/padala.html
+
+
+Terminal Codes
+
+In the olden days of teletype terminals, terminals were away from computers
+and were connected to them through serial cables. The terminals could be
+configured by sending a series of bytes to each of them. All the capabilities
+of terminals could be accessed through these series of bytes which are usually
+called escape sequences because they start with an escape(0x1B) character.
+Even today with vt100 emulation, we can send escape sequences to the emulator
+and it will have the same effect on the terminal window. Hence, in order to
+print color, we merely echo a control code.
+
+Type this on your console.
+
+	echo "^[[0;31;40mIn Color"
+
+The first character is an escape character, which looks like two characters
+^ and [. To be able to print that you have to press CTRL+V and then the
+ESC key. All the others are normal printable characters. You see the string
+"In Color" in red. It stays that way and to revert back type this
+
+	echo "^[[0;37;40m"
+
+As you can see it's pretty easy to set color and reset it back. There are a
+myriad of escape sequences with which you can do a lot of things like moving
+the cursor, resetting the terminal etc..
+
+The Color Code:     <ESC>[{attr};{fg};{bg}m
+
+I'll explain the escape sequence to produce colors. The sequence to be
+printed or echoed to the terminal is
+
+	<ESC>[{attr};{fg};{bg}m
+
+The first character is ESC which has to be printed by pressing CTRL+V
+and then ESC on the Linux console or in xterm, konsole, kvt, etc.
+("CTRL+V ESC" is also the way to embed an escape character in a document
+in vim.) Then {attr}, {fg}, {bg} have to be replaced with the correct
+value to get the corresponding effect. attr is the attribute like
+blinking or underlined etc.. fg and bg are foreground and background
+colors respectively. You don't have to put braces around the number.
+Just writing the number will suffice.
+
+{attr} is one of following
+
+	0	Reset All Attributes (return to normal mode)
+	1	Bright (Usually turns on BOLD)
+	2 	Dim
+	3	Underline
+	5	Blink
+	7 	Reverse
+	8	Hidden
+
+{fg} is one of the following
+
+	30	Black
+	31	Red
+	32	Green
+	33	Yellow
+	34	Blue
+	35	Magenta
+	36	Cyan
+	37	White
+
+{bg} is one of the following
+
+	40	Black
+	41	Red
+	42	Green
+	43	Yellow
+	44	Blue
+	45	Magenta
+	46	Cyan
+	47	White
+
+So to get a blinking line with Blue foreground and Green background,
+the combination to be used should be
+
+	
+echo "^[[5;34;42mIn color"
+
+which actually is very ugly. :-) Revert back with
+
+echo "^[0;37;40m"
+
+
+#########
+With tput
+#########
+
+But there is a way to query the terminfo database and do the work.
+tput is the command which queries the database and executes the
+functionality you specify. The two capabilities setf and setb are
+useful to set foreground and background colors. Use this to set
+foreground color to red and background color to green.
+
+	tput setf 4	# tput setf {fg color number}
+	tput setb 2	# tput setb {bg color number}
+
+This can be used in shell scripts where you want. See the tput manual
+page for additional capabilities of tput. The terminfo manpages contain
+a lot of information regarding terminal capabilities - how to get and
+set their values and more. There are two terminfo manpages.
+"man 5 terminfo" describes the terminfo database. "man 3ncurses terminfo"
+describes the C functions that use the database.
+
+These are the color numbers to be passed as arguments to "tput setf" and "tput setb".
+
+	0	Black
+	1	Red
+	2	Green
+	3	Yellow
+	4	Blue
+	5	Magenta
+	6	Cyan
+	7	White
+
+Have fun !!! 
+
+###########################################################################
+FROM: http://forums11.itrc.hp.com/service/forums/questionanswer.do?admit=109447626+1275307372746+28353475&threadId=90705
+
+Now for a nifty prompt string, you can use tput to create the
+appropriate ESC sequences for your terminal. Here is a snippet from
+/etc/profile (or you can put it into .profile if you like:
+
+# Terminal character enhancements
+HB=$(/usr/bin/tput dim) # dim text
+HV=$(/usr/bin/tput smso) # 1/2 bright inverse
+IV=$(/usr/bin/tput bold) # inverse
+NV=$(/usr/bin/tput rmso) # end smso
+UL=$(/usr/bin/tput smul) # underline
+EE=$(/usr/bin/tput sgr0) # end enhancements
+
+# Setup the prompt string $PS1
+if &#91; "$(/usr/bin/id -u)" = "0" &#93;
+then
+SUFFIX="#"
+else
+SUFFIX="$"
+fi
+HN=$(/usr/bin/hostname)
+PS1='${HV}${HN} ${IV}${PWD##${PWD%/*/*}/}${EE} ${SUFFIX} '
+
+Now this strange PS1 will produce a half-bright, inverse-video
+string for the hostname, and full inverse-video for the current
+and parent directory. Since tput pays attention to the $TERM value,
+you can use any terminal (or emulator) and simply set $TERM to match.
+For the half-bright enhancement to show up, your emulator must support that feature.
+
+Note that several (the majority) of HP terminal information (terminfo)
+entries in HP-UX have the wrong code for the smso enhancement
+(half-bright inverse-video). Since all HP terminals built since 1979
+(the HP 2640A) have this feature, you can edit the terminfo database
+using untic and tic to add the correct code. Here's a way to test:
+
+TERM=hp
+echo "$(tput smso) half-bright=smso $(tput bold) inverse=bold"
+
+TERM=2392a
+echo "$(tput smso) half-bright=smso $(tput bold) inverse=bold"
+
+You can see that the halfbright enhancement changes with 2392a.
+
+As always, your mileage will vary with non-HP terminals...some have
+all the enhancements, others do not. Use untic and grep to search for the features.
+
+...
+...
+...
+
+Here is a script that works with a dtterm that is from HP's POSIX
+Shell Programming course. You may need to use different cap values
+(setaf) for the tput command for other terminals.
+
+--------------cut--------------
+# cat color_text
+#!/usr/bin/sh
+# color_text.sh
+
+# TERM=dtterm
+# setaf for foreground color, setab for background
+bla="$( tput setaf 0 )"
+red="$( tput setaf 1 )"
+gre="$( tput setaf 2 )"
+yel="$( tput setaf 3 )"
+blu="$( tput setaf 4 )"
+pur="$( tput setaf 5 )"
+cya="$( tput setaf 6 )"
+whi="$( tput setaf 7 )"
+off="$( tput sgr0 )"
+
+print "${yel}Follow the Yellow Brick Road ${off}"
+
+print "${gre}The grass is always greener...${off}"
+
+print "${pur}Purple is ${red}RED ${cya}& ${blu}BLUE"
+
+print "Good movies are ${bla}BLACK ${off}& ${whi}WHITE"
+
+# turn off all special effects before exit (normal mode)
+print "$off"
+exit
+
+
+
